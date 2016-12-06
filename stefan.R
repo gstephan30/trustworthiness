@@ -2,6 +2,7 @@ PMT
 
 dat<-read.csv(file = "trustworthiness_pheo_test.csv", sep = ";", header = TRUE, dec = ",") ## my data
 ## plot 
+library(RColorBrewer)
 display.brewer.all()
 ## let's choose the blue from "set1" for those who did not participate and red to those who didnt
 somecols<-brewer.pal(5, "Set1")
@@ -17,14 +18,18 @@ oldpar<-par()
 ## the actual plot:
 
 layout(matrix(c(2,2,2,2,1,1,1,1,1,1,1, 1,1,1,1, 1,1,1,1,1, 1,1,1,1), nrow=6, byrow=T))
-
+library(car)
 par(mar=c(5,5,1,0))
 plot(0,0,type="n", ylim=c(-10,40), xlim=c(60,105), ylab="completeness in %", xlab="trustworthiness in %", 
      main="",cex.axis=2, las=1, cex.lab=2, cex.main=2, bty="n", yaxs="i", xaxs="i")
 points( dat$trustworthiness,dat$completeness, cex=10*dat$cex, col=dat$colors, pch=16) ## i want the maximum size of a plotting symbol to be 8
 with(subset(dat, pmt==1), dataEllipse(trustworthiness,completeness, weights=records2, levels=0.95, add=T, center.pch=NULL, plot.points = F, col=red))
 with(subset(dat, pmt==0), dataEllipse(trustworthiness,completeness, weights=records2, levels=0.95, add=T, center.pch=NULL, plot.points = F, col='blue'))
-##text(y=dat$completeness, x=dat$usefulness, dat$records)
+
+with(subset(dat, cex>=0.8 ), text(x=trustworthiness,y=completeness, 
+                                  centre))
+head(dat)
+table(dat$cex)
 par(mar=c(0,0,0,0))
 plot(0,0,type="n",  ylab="", xlab="", main="", bty="n", xaxt="n", yaxt="n")
 legend("center", pch=16,  col=c(transred, transblue), legend=c("PMT", "no PMT"),
@@ -33,10 +38,12 @@ legend("center", pch=16,  col=c(transred, transblue), legend=c("PMT", "no PMT"),
 
 
 
+
 EURINE-ACT
 
 dat<-read.csv(file = "trustworthiness_ACC_test.csv", sep = ";", header = TRUE, dec = ",") ## my data
 ## plot 
+library(RColorBrewer)
 display.brewer.all()
 ## let's choose the blue from "set1" for those who did not participate and red to those who didnt
 somecols<-brewer.pal(5, "Set1")
@@ -52,14 +59,18 @@ oldpar<-par()
 ## the actual plot:
 
 layout(matrix(c(2,2,2,2,1,1,1,1,1,1,1, 1,1,1,1, 1,1,1,1,1, 1,1,1,1), nrow=6, byrow=T))
-
+library(car)
 par(mar=c(5,5,1,0))
 plot(0,0,type="n", ylim=c(0,90), xlim=c(65,105), ylab="completeness in %", xlab="trustworthiness in %", 
      main="",cex.axis=2, las=1, cex.lab=2, cex.main=2, bty="n", yaxs="i", xaxs="i")
 points( dat$trustworthiness,dat$completeness, cex=10*dat$cex, col=dat$colors, pch=16) ## i want the maximum size of a plotting symbol to be 8
 with(subset(dat, EURINE==1), dataEllipse(trustworthiness,completeness, weights=records2, levels=0.95, add=T, center.pch=NULL, plot.points = F, col=red))
 with(subset(dat, EURINE==0), dataEllipse(trustworthiness,completeness, weights=records2, levels=0.95, add=T, center.pch=NULL, plot.points = F, col='blue'))
-##text(y=dat$completeness, x=dat$usefulness, dat$records)
+
+with(subset(dat, cex>=0.8 ), text(x=trustworthiness,y=completeness, 
+                                  centre))
+head(dat)
+table(dat$cex)
 par(mar=c(0,0,0,0))
 plot(0,0,type="n",  ylab="", xlab="", main="", bty="n", xaxt="n", yaxt="n")
 legend("center", pch=16,  col=c(transred, transblue), legend=c("EURINE-ACT", "no EURINE-ACT"),
